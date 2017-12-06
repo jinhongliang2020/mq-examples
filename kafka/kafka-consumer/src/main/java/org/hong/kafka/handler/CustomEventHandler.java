@@ -13,9 +13,9 @@ import org.springframework.stereotype.Component;
  * @date 2017/12/6
  */
 @Component
-public class EventCustomHandler {
+public class CustomEventHandler {
 
-    private static final Logger logger = Logger.getLogger(EventCustomHandler.class);
+    private static final Logger logger = Logger.getLogger(CustomEventHandler.class);
 
     /**
      * @param
