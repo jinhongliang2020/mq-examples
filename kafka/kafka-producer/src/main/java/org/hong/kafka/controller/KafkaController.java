@@ -24,7 +24,7 @@ public class KafkaController {
 
     @RequestMapping("/wirteKafka")
     public void wirteKafka(String msg){
-        ListenableFuture<SendResult<String, String>> res =  kafkaTemplate.send("test ",msg);
+        ListenableFuture<SendResult<String, String>> res =  kafkaTemplate.send("test",msg);
         KafkaUtil.checkProRecord(res);
     }
 
