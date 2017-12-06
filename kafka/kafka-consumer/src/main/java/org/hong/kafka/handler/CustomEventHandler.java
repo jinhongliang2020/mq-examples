@@ -24,7 +24,6 @@ public class CustomEventHandler {
     @EventListener(condition = "#event.topic=='test'")
     public void testHandle(KafkaTopicEvent event) {
         String data = event.getRecord().value();
-        logger.info("订阅topic: test消息：" + data);
+        logger.info("处理topic: test消息：" + data.concat("-----test"));
     }
-
 }
