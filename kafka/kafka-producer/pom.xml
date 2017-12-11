@@ -4,21 +4,12 @@
         <artifactId>kafka</artifactId>
         <groupId>org.hong</groupId>
         <version>1.0-SNAPSHOT</version>
-        <relativePath>../kafka/pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>kafka-producer</artifactId>
     <packaging>war</packaging>
-    <name>kafka-producer Maven Webapp</name>
+    <name>kafka-producer</name>
     <url>http://maven.apache.org</url>
-    <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
     <build>
         <finalName>kafka-producer</finalName>
     </build>

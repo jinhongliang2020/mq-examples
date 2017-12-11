@@ -41,6 +41,6 @@
     </bean>
 
     <!--生产者监听器.-->
-    <bean id="producerListener" class="org.hong.kafka.listener.KafkaProducerListener"/>
+    <bean id="producerListener" class="org.hong.kafka.listen.KafkaProducerListener"/>
 
 </beans>

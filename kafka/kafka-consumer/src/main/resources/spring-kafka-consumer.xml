@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/integration/kafka
+        http://www.springframework.org/schema/integration
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 定义consumer的参数 -->
+    <bean id="consumerProperties" class="java.util.HashMap">
+        <constructor-arg>
+            <map>
+                <entry key="bootstrap.servers" value="${bootstrap.servers}"/>
+                <entry key="group.id" value="${group.id}"/>
+                <!--注：后续测试，如果量大的时候消费出现问题，可以改为false,手动提交offset.-->
+                <entry key="enable.auto.commit" value="true"/>
+                <entry key="auto.commit.interval.ms" value="1000"/>
+                <entry key="session.timeout.ms" value="15000"/>
+                <entry key="key.deserializer" value="org.apache.kafka.common.serialization.StringDeserializer"/>
+                <entry key="value.deserializer" value="org.apache.kafka.common.serialization.StringDeserializer"/>
+                <entry key="consumerTaskExecutor" value-ref="kafkaWorkerThreadPool"/>
+            </map>
+        </constructor-arg>
+    </bean>
+
+    <!--listener使用自定义线程池-->
+    <bean id="kafkaWorkerThreadPool" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+        <property name="corePoolSize" value="20"/>
+        <property name="maxPoolSize" value="200"/>
+        <property name="queueCapacity" value="500"/>
+        <property name="keepAliveSeconds" value="1800"/>
+        <property name="rejectedExecutionHandler">
+            <bean class="java.util.concurrent.ThreadPoolExecutor$CallerRunsPolicy"/>
+        </property>
+    </bean>
+
+    <!-- 创建consumerFactory bean -->
+    <bean id="consumerFactory" class="org.springframework.kafka.core.DefaultKafkaConsumerFactory">
+        <constructor-arg ref="consumerProperties" />
+    </bean>
+
+    <!-- 实际执行消息消费的类 -->
+    <bean id="messageListernerConsumerService" class="org.hong.kafka.listen.KafkaConsumerListener"/>
+
+    <!-- 消费者容器配置信息 -->
+    <bean id="containerProperties" class="org.springframework.kafka.listener.config.ContainerProperties">
+        <constructor-arg  ref="topics"/>
+        <property name="messageListener" ref="messageListernerConsumerService"/>
+    </bean>
+
+    <!-- kafka listenerContainer  -->
+    <bean id="messageListenerContainer" class="org.springframework.kafka.listener.ConcurrentMessageListenerContainer" init-method="doStart">
+        <constructor-arg ref="consumerFactory"/>
+        <constructor-arg ref="containerProperties"/>
+    </bean>
+
+    <!--自定义topic 提供者. -->
+    <!--配置一个bean,该bean 实际上是一个 String[] topics;. 通过实例工厂的方式 -->
+    <bean id="topics" factory-bean="filterChainDefinitionTopicsBuilder" factory-method="builderFilterChainDefinitionTopics"></bean>
+
+    <bean id="filterChainDefinitionTopicsBuilder" class="org.hong.kafka.utils.FilterChainDefinitionTopicsBuilder"></bean>
+
+</beans>
