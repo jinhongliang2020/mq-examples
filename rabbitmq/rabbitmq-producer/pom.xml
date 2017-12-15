@@ -8,7 +8,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>rabbitmq-producer</artifactId>
     <packaging>war</packaging>
-    <name>rabbitmq-producer Maven Webapp</name>
+    <name>rabbitmq-producer</name>
     <url>http://maven.apache.org</url>
     <build>
         <finalName>rabbitmq-producer</finalName>

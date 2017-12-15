@@ -90,7 +90,7 @@
 
     </dependencies>
     <build>
-        <finalName>mq</finalName>
+        <finalName>mq-examples</finalName>
         <plugins>
             <!--maven 项目编译插件. -->
             <plugin>

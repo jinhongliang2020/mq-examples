@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>mq</artifactId>
+        <artifactId>mq-examples</artifactId>
         <groupId>org.hong</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
@@ -21,8 +21,28 @@
         <dependency>
             <groupId>com.rabbitmq</groupId>
             <artifactId>amqp-client</artifactId>
-            <version>4.2.0</version>
+            <version>4.0.2</version>
         </dependency>
+
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.amqp/spring-rabbit -->
+        <!-- AmqpTemplate -->
+        <dependency>
+            <groupId>org.springframework.amqp</groupId>
+            <artifactId>spring-rabbit</artifactId>
+            <version>1.6.0.RELEASE</version>
+        </dependency>
+
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.amqp/spring-rabbit -->
+        <!-- RabbitTeamplate  -->
+        <!--<dependency>
+            <groupId>org.springframework.amqp</groupId>
+            <artifactId>spring-rabbit</artifactId>
+            <version>2.0.0.RELEASE</version>
+        </dependency>-->
+
+
     </dependencies>
 
 </project>

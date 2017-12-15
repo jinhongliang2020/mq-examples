@@ -1,4 +1,4 @@
-package org.hong.rabbitmq;
+package rabbitmq.test;
 
 import com.rabbitmq.client.*;
 import org.junit.Test;
@@ -8,7 +8,7 @@ import java.util.concurrent.TimeoutException;
 
 public class ConsumerTest {
 
-    private final static String QUEUE_NAME = "hello";
+    private final static String QUEUE_NAME = "queueTest";
 
     @Test
     public void testPull() throws IOException, TimeoutException {

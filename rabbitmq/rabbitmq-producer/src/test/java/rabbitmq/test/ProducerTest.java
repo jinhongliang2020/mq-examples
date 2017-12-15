@@ -1,4 +1,4 @@
-package org.hong.rabbitmq;
+package rabbitmq.test;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
