@@ -29,7 +29,7 @@
 
     <!--定义rabbit template用于数据的接收和发送 -->
     <rabbit:template id="amqpTemplate" connection-factory="connectionFactory"
-                     exchange="exchange" />
+                     exchange="exchangeTest" />
 
 
 </beans>

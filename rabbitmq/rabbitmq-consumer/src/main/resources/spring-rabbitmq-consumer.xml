@@ -17,7 +17,7 @@
     <rabbit:queue name="queueTest" durable="true" auto-delete="false" exclusive="false" declared-by="connectAdmin"/>
 
     <!-- 定义direct exchange，绑定queueFirst -->
-    <rabbit:direct-exchange name="exchange" durable="true" auto-delete="false" declared-by="connectAdmin">
+    <rabbit:direct-exchange name="exchangeTest" durable="true" auto-delete="false" declared-by="connectAdmin">
         <rabbit:bindings>
             <rabbit:binding queue="queueTest" key="queueKey">
             </rabbit:binding>

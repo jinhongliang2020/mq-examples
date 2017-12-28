@@ -1,0 +1,59 @@
+package rabbitmq.test.topic;
+
+import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.ConnectionFactory;
+
+import java.io.IOException;
+import java.util.concurrent.TimeoutException;
+
+public class TopicSend {
+
+    private static final String EXCHANGE_NAME = "topic_test";
+
+    public static void main(String[] args) throws IOException, TimeoutException {
+        Connection connection = null;
+        Channel channel = null;
+        try {
+            ConnectionFactory factory = new ConnectionFactory();
+            //设置RabbitMQ所在主机ip或者主机名
+            factory.setHost("39.108.212.203");
+            //端口
+            factory.setPort(5672);
+            factory.setUsername("admin");
+            factory.setPassword("admin123");
+            connection = factory.newConnection();
+            channel = connection.createChannel();
+
+            //声明一个匹配模式的交换机
+            channel.exchangeDeclare(EXCHANGE_NAME, "topic");
+            //待发送的消息
+            String[] routingKeys = new String[]{
+                    "quick.orange.rabbit",
+                    "lazy.orange.elephant",
+                    "quick.orange.fox",
+                    "lazy.brown.fox",
+                    "quick.brown.fox",
+                    "quick.orange.male.rabbit",
+                    "lazy.orange.male.rabbit"
+            };
+            //发送消息
+            for (String severity : routingKeys) {
+                String message = "From " + severity + " routingKey' s message!";
+                channel.basicPublish(EXCHANGE_NAME, severity, null, message.getBytes());
+                System.out.println("TopicSend Sent '" + severity + "':'" + message + "'");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (connection != null) {
+                channel.close();
+                connection.close();
+            }
+        } finally {
+            if (connection != null) {
+                channel.close();
+                connection.close();
+            }
+        }
+    }
+}

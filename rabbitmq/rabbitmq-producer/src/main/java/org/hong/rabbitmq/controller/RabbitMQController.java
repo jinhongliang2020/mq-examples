@@ -14,6 +14,6 @@ public class RabbitMQController {
 
     @RequestMapping("/pushMsg")
     public void pushMsg(String msg) {
-           rabbitTemplate.convertAndSend("queueKey",msg);
+           rabbitTemplate.convertAndSend("queueTest",msg);
     }
 }
