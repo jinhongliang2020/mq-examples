@@ -17,6 +17,7 @@
             </array>
         </property>
     </bean>
-    <import resource="classpath:spring-rabbitmq-producer.xml"/>
+
+    <import resource="classpath:fanout/rabbitmq-producer.xml"/>
 
 </beans>

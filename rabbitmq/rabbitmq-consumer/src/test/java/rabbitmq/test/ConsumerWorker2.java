@@ -1,6 +1,7 @@
 package rabbitmq.test;
 
 import com.rabbitmq.client.*;
+import org.hong.rabbitmq.utils.ConnectionUtil;
 
 import java.io.IOException;
 
@@ -9,14 +10,15 @@ public class ConsumerWorker2 {
     private static final String TASK_QUEUE_NAME = "task_queue";
 
     public static void main(String[] argv)  throws Exception {
-        ConnectionFactory factory = new ConnectionFactory();
-        //设置RabbitMQ所在主机ip或者主机名
-        factory.setHost("39.108.212.203");
-        //端口
-        factory.setPort(5672);
-        factory.setUsername("admin");
-        factory.setPassword("admin123");
-        final Connection connection = factory.newConnection();
+        /**
+         * 获取RabbitMQ 连接.
+         */
+        Connection connection = null;
+        try {
+            connection = ConnectionUtil.getConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         final Channel channel = connection.createChannel();
 
         channel.queueDeclare(TASK_QUEUE_NAME, true, false, false, null);

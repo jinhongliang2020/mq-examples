@@ -115,7 +115,7 @@
        }
    ```
 - [x] header exchange
-  此类型的exchange和以上三个都不一样，其路由的规则是根据header来判断，其中的header就是以下方法的arguments参数：
+  此类型的exchange和以上三个都不一样，其路由的规则是根据header来判断，其中的header就是以下方法的arguments参数
 
 
 

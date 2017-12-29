@@ -3,6 +3,7 @@ package rabbitmq.test.routing;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
+import utils.ConnectionUtil;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
@@ -23,14 +24,12 @@ public class RoutingSendDirect {
         /**
          * 创建连接连接到RabbitMQ
          */
-        ConnectionFactory factory = new ConnectionFactory();
-        //设置RabbitMQ所在主机ip或者主机名
-        factory.setHost("39.108.212.203");
-        //端口
-        factory.setPort(5672);
-        factory.setUsername("admin");
-        factory.setPassword("admin123");
-        Connection connection = factory.newConnection();
+        Connection connection = null;
+        try {
+            connection = ConnectionUtil.getConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         Channel channel = connection.createChannel();
         //声明交换机
         channel.exchangeDeclare(EXCHANGE_NAME,"direct");//注意是direct

@@ -1,6 +1,7 @@
 package rabbitmq.test.fanout;
 
 import com.rabbitmq.client.*;
+import org.hong.rabbitmq.utils.ConnectionUtil;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
@@ -19,15 +20,12 @@ public class ExchangeConsumer {
         /**
          * 创建连接连接到RabbitMQ
          */
-        ConnectionFactory factory = new ConnectionFactory();
-        //设置RabbitMQ所在主机ip或者主机名
-        factory.setHost("39.108.212.203");
-        //端口
-        factory.setPort(5672);
-        factory.setUsername("admin");
-        factory.setPassword("admin123");
-        //创建一个连接
-        Connection connection = factory.newConnection();
+        Connection connection = null;
+        try {
+            connection = ConnectionUtil.getConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         Channel channel = connection.createChannel();
 
         channel.exchangeDeclare(EXCHANGE_NAME, "fanout");

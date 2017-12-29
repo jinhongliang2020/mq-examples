@@ -1,6 +1,7 @@
 package rabbitmq.test;
 
 import com.rabbitmq.client.*;
+import org.hong.rabbitmq.utils.ConnectionUtil;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -12,15 +13,15 @@ public class ConsumerTest {
 
     @Test
     public void testPull() throws IOException, TimeoutException {
-        // 创建连接工厂
-        ConnectionFactory factory = new ConnectionFactory();
-        // 设置RabbitMQ地址
-        factory.setHost("39.108.212.203");
-        factory.setPort(5672);
-        factory.setUsername("admin");
-        factory.setPassword("admin123");
-        // 创建一个新的连接
-        Connection connection = factory.newConnection();
+        /**
+         * 获取RabbitMQ 连接.
+         */
+        Connection connection = null;
+        try {
+            connection = ConnectionUtil.getConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         // 创建一个频道
         Channel channel = connection.createChannel();
         // 声明要关注的队列 -- 在RabbitMQ中，队列声明是幂等性的（一个幂等操作的特点是其任意多次执行所产生的影响均与一次执行的影响相同），也就是说，如果不存在，就创建，如果存在，不会对已经存在的队列产生任何影响。

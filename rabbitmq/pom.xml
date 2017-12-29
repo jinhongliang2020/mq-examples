@@ -17,32 +17,38 @@
     </modules>
 
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/com.rabbitmq/amqp-client -->
+   <!--     &lt;!&ndash; https://mvnrepository.com/artifact/com.rabbitmq/amqp-client &ndash;&gt;
         <dependency>
             <groupId>com.rabbitmq</groupId>
             <artifactId>amqp-client</artifactId>
             <version>4.0.2</version>
         </dependency>
 
-
-        <!-- https://mvnrepository.com/artifact/org.springframework.amqp/spring-rabbit -->
-        <!-- AmqpTemplate -->
+        &lt;!&ndash; https://mvnrepository.com/artifact/org.springframework.amqp/spring-rabbit &ndash;&gt;
+        &lt;!&ndash; AmqpTemplate &ndash;&gt;
         <dependency>
             <groupId>org.springframework.amqp</groupId>
             <artifactId>spring-rabbit</artifactId>
             <version>1.6.0.RELEASE</version>
         </dependency>
-
-
-        <!-- https://mvnrepository.com/artifact/org.springframework.amqp/spring-rabbit -->
-        <!-- RabbitTeamplate  -->
-        <!--<dependency>
+-->
+        <!--rabbitmq依赖 -->
+        <dependency>
             <groupId>org.springframework.amqp</groupId>
             <artifactId>spring-rabbit</artifactId>
-            <version>2.0.0.RELEASE</version>
-        </dependency>-->
+            <version>1.3.5.RELEASE</version>
+        </dependency>
 
+        <dependency>
+            <groupId>com.rabbitmq</groupId>
+            <artifactId>amqp-client</artifactId>
+            <version>3.6.5</version>
+        </dependency>
 
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>1.9.13</version>
+        </dependency>
     </dependencies>
-
 </project>

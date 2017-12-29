@@ -5,6 +5,7 @@ import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.MessageProperties;
 import org.junit.Test;
+import utils.ConnectionUtil;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
@@ -15,14 +16,15 @@ public class ProducerTask {
 
     @Test
     public void task() throws IOException, TimeoutException {
-        ConnectionFactory factory = new ConnectionFactory();
-        //设置RabbitMQ所在主机ip或者主机名
-        factory.setHost("39.108.212.203");
-        //端口
-        factory.setPort(5672);
-        factory.setUsername("admin");
-        factory.setPassword("admin123");
-        Connection connection = factory.newConnection();
+        /**
+         * 获取RabbitMQ 连接.
+         */
+        Connection connection = null;
+        try {
+            connection = ConnectionUtil.getConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         Channel channel = connection.createChannel();
 
         channel.queueDeclare(TASK_QUEUE_NAME, true, false, false, null);

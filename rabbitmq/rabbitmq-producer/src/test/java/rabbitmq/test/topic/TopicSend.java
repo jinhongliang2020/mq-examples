@@ -3,6 +3,7 @@ package rabbitmq.test.topic;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
+import utils.ConnectionUtil;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
@@ -15,14 +16,14 @@ public class TopicSend {
         Connection connection = null;
         Channel channel = null;
         try {
-            ConnectionFactory factory = new ConnectionFactory();
-            //设置RabbitMQ所在主机ip或者主机名
-            factory.setHost("39.108.212.203");
-            //端口
-            factory.setPort(5672);
-            factory.setUsername("admin");
-            factory.setPassword("admin123");
-            connection = factory.newConnection();
+            /**
+             * 获取RabbitMQ 连接.
+             */
+            try {
+                connection = ConnectionUtil.getConnection();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             channel = connection.createChannel();
 
             //声明一个匹配模式的交换机

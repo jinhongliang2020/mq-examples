@@ -1,6 +1,7 @@
 package rabbitmq.test.topic;
 
 import com.rabbitmq.client.*;
+import org.hong.rabbitmq.utils.ConnectionUtil;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
@@ -10,14 +11,15 @@ public class ReceiveTopicTest {
     private static final String EXCHANGE_NAME = "topic_test";
 
     public static void main(String[] args) throws IOException, TimeoutException {
-        // 创建连接工厂
-        ConnectionFactory factory = new ConnectionFactory();
-        // 设置RabbitMQ地址
-        factory.setHost("39.108.212.203");
-        factory.setPort(5672);
-        factory.setUsername("admin");
-        factory.setPassword("admin123");
-        Connection connection = factory.newConnection();
+        /**
+         * 获取RabbitMQ 连接.
+         */
+        Connection connection = null;
+        try {
+            connection = ConnectionUtil.getConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         Channel channel = connection.createChannel();
 
         //声明一个匹配模式的交换机
