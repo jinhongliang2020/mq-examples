@@ -19,5 +19,6 @@
     </bean>
     <import resource="classpath:fanout/rabbitmq-consumer.xml"/>
     <import resource="classpath:direct/rabbitmq-consumer.xml"/>
+    <import resource="classpath:topic/rabbitmq-consumer.xml"/>
 
 </beans>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd  
+     http://www.springframework.org/schema/rabbit  
+     http://www.springframework.org/schema/rabbit/spring-rabbit-1.2.xsd">
+
+    <import resource="classpath:base/rabbitmq-base.xml"/>
+
+    <!--定义消息队列-->
+    <rabbit:queue name="test-topic-queue-1" durable="true" auto-delete="false"/>
+    <rabbit:queue name="test-topic-queue-2" durable="true" auto-delete="false"/>
+
+    <!-- 启动两个队列对应的监听(消费者) -->
+    <bean id="topicListener" class="org.hong.rabbitmq.consumer.topic.TopicListener"></bean>
+    <bean id="topicListener2" class="org.hong.rabbitmq.consumer.topic.TopicListener2"></bean>
+
+    <!-- 将两个队列加入监听容器中，每个队列的监听都对应一个监听器 -->
+    <rabbit:listener-container connection-factory="connectionFactory" concurrency="8">
+        <rabbit:listener queues="test-topic-queue-1" ref="topicListener" method="onMessage"/>
+        <rabbit:listener queues="test-topic-queue-2" ref="topicListener2" method="onMessage"/>
+    </rabbit:listener-container>
+</beans>  

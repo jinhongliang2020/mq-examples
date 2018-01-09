@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd  
+     http://www.springframework.org/schema/rabbit  
+     http://www.springframework.org/schema/rabbit/spring-rabbit-1.2.xsd">
+
+    <import resource="classpath:base/rabbitmq-base.xml"/>
+
+    <!--定义消息队列-->
+    <rabbit:queue name="test-topic-queue-1" durable="true" auto-delete="false" />
+    <rabbit:queue name="test-topic-queue-2" durable="true" auto-delete="false" />
+
+    <!-- topic主题 -->
+    <rabbit:topic-exchange name="test.topic.exchange" xmlns="http://www.springframework.org/schema/rabbit" durable="true">
+        <bindings>
+            <binding queue="test-topic-queue-1" pattern="*.topic.*" />
+            <binding queue="test-topic-queue-2" pattern="topic.*.#" />
+        </bindings>
+    </rabbit:topic-exchange>
+
+    <!-- 创建rabbitTemplate 消息模板类 -->
+    <bean id="rabbitTemplateTopic" class="org.springframework.amqp.rabbit.core.RabbitTemplate">
+        <constructor-arg ref="connectionFactory"></constructor-arg>
+    </bean>
+</beans>

@@ -20,5 +20,6 @@
 
     <import resource="classpath:fanout/rabbitmq-producer.xml"/>
     <import resource="classpath:direct/rabbitmq-producer.xml"/>
+    <import resource="classpath:topic/rabbitmq-producer.xml"/>
 
 </beans>

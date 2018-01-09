@@ -14,14 +14,14 @@
     <!--交换机定义 -->
     <!--rabbit:direct-exchange：定义exchange模式为direct， 意思就是消息与一个特定的路由键完全匹配，才会转发。
         rabbit:binding：设置消息queue匹配的key -->
-    <rabbit:direct-exchange  id="rabbit.exchange.direct" name="rabbit.exchange.direct" durable="true" auto-delete="false">
+    <rabbit:direct-exchange  id="test.direct.exchange" name="test.direct.exchange" durable="true" auto-delete="false">
         <rabbit:bindings>
             <rabbit:binding queue="test-direct-queue" key="test.direct.queueKey" />
         </rabbit:bindings>
     </rabbit:direct-exchange>
 
     <!--spring template声明 -->
-    <rabbit:template id="rabbitTemplateDirect"  exchange="rabbit.exchange.direct"
+    <rabbit:template id="rabbitTemplateDirect"  exchange="test.direct.exchange"
                      connection-factory="connectionFactory"
                      message-converter="jsonMessageConverter"
                      routing-key="test.direct.queueKey">

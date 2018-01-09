@@ -19,7 +19,7 @@
     </rabbit:listener-container>
 
     <!-- exchange queue binging key 绑定 -->
-    <rabbit:direct-exchange name="rabbit.exchange.direct" durable="true" auto-delete="false">
+    <rabbit:direct-exchange name="test.direct.exchange" durable="true" auto-delete="false">
         <rabbit:bindings>
             <rabbit:binding queue="test-direct-queue" key="test.direct.queueKey"/>
         </rabbit:bindings>
