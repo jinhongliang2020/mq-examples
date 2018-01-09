@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd  
+     http://www.springframework.org/schema/rabbit  
+     http://www.springframework.org/schema/rabbit/spring-rabbit-1.2.xsd">
+
+    <import resource="classpath:base/rabbitmq-base.xml"/>
+
+    <!--定义消息队列-->
+    <rabbit:queue name="test-direct-queue" durable="true" auto-delete="false" />
+
+    <!--交换机定义 -->
+    <!--rabbit:direct-exchange：定义exchange模式为direct， 意思就是消息与一个特定的路由键完全匹配，才会转发。
+        rabbit:binding：设置消息queue匹配的key -->
+    <rabbit:direct-exchange  id="rabbit.exchange.direct" name="rabbit.exchange.direct" durable="true" auto-delete="false">
+        <rabbit:bindings>
+            <rabbit:binding queue="test-direct-queue" key="test.direct.queueKey" />
+        </rabbit:bindings>
+    </rabbit:direct-exchange>
+
+    <!--spring template声明 -->
+    <rabbit:template id="rabbitTemplateDirect"  exchange="rabbit.exchange.direct"
+                     connection-factory="connectionFactory"
+                     message-converter="jsonMessageConverter"
+                     routing-key="test.direct.queueKey">
+    </rabbit:template>
+
+    <!--消息对象转成成json -->
+    <bean id="jsonMessageConverter" class="org.springframework.amqp.support.converter.JsonMessageConverter"></bean>
+  
+</beans>  

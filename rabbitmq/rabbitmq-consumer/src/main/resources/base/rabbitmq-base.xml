@@ -11,9 +11,6 @@
                                password="${rabbitmq.password}" host="${rabbitmq.host}" port="${rabbitmq.port}"/>
 
     <!--通过指定下面的admin信息，当前producer中的exchange和queue会在rabbitmq服务器上自动生成 -->
-    <rabbit:admin id="connectAdmin" connection-factory="connectionFactory"/>
-
-    <rabbit:queue name="test123queue" durable="true" auto-delete="false"/>
-    <!--<rabbit:queue name="test-queue-2" durable="true" auto-delete="false"/>-->
+    <rabbit:admin  connection-factory="connectionFactory"/>
 
 </beans>  

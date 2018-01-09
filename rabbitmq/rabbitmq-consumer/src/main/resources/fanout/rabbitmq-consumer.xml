@@ -6,14 +6,9 @@
      http://www.springframework.org/schema/rabbit  
      http://www.springframework.org/schema/rabbit/spring-rabbit-1.2.xsd">
 
-    <!-- rabbitMQ配置 -->
-    <rabbit:connection-factory id="connectionFactory" virtual-host="/" username="${rabbitmq.username}"
-                               password="${rabbitmq.password}" host="${rabbitmq.host}" port="${rabbitmq.port}"/>
+    <import resource="classpath:base/rabbitmq-base.xml"/>
 
-    <!--通过指定下面的admin信息，当前producer中的exchange和queue会在rabbitmq服务器上自动生成 -->
-    <rabbit:admin  connection-factory="connectionFactory"/>
-
-    <!-- 启动两个队列对应的监听(消费者) -->
+    <!-- 启动1个队列对应的监听(消费者)  -->
     <rabbit:queue name="test-queue-1" durable="true" auto-delete="false" />
 
 	<!-- 该处把需要数据的队列与路由绑定一起，如果手动在控制台绑定就不需要此代码 -->
@@ -24,7 +19,7 @@
     </rabbit:fanout-exchange> 
 
     <!-- 启动两个队列对应的监听(消费者) -->
-    <bean id="fanoutListener" class="org.hong.rabbitmq.consumer.fanout.FanoutConsumerListener"></bean>
+    <bean id="fanoutListener" class="org.hong.rabbitmq.consumer.fanout.FanoutListener"></bean>
 
     <rabbit:listener-container connection-factory="connectionFactory" concurrency="8">
         <rabbit:listener queues="test-queue-1" ref="fanoutListener" method="onMessage"/>
