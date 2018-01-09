@@ -6,7 +6,6 @@
      http://www.springframework.org/schema/rabbit  
      http://www.springframework.org/schema/rabbit/spring-rabbit-1.2.xsd">
 
-	<!--<import resource="rabbitmq-base.xml" />-->
     <!-- rabbitMQ配置 -->
     <rabbit:connection-factory id="connectionFactory" virtual-host="/" username="${rabbitmq.username}"
                                password="${rabbitmq.password}" host="${rabbitmq.host}" port="${rabbitmq.port}"/>
@@ -14,23 +13,21 @@
     <!--通过指定下面的admin信息，当前producer中的exchange和queue会在rabbitmq服务器上自动生成 -->
     <rabbit:admin  connection-factory="connectionFactory"/>
 
-    <rabbit:queue id="test123queue"  auto-delete="true"/>
+    <!-- 启动两个队列对应的监听(消费者) -->
+    <rabbit:queue name="test-queue-1" durable="true" auto-delete="false" />
 
 	<!-- 该处把需要数据的队列与路由绑定一起，如果手动在控制台绑定就不需要此代码 -->
-    <rabbit:fanout-exchange name="test.fanout.exchange" auto-declare="false">
+    <rabbit:fanout-exchange name="test.fanout.exchange"  xmlns="http://www.springframework.org/schema/rabbit" durable="true">
         <rabbit:bindings>
-            <rabbit:binding queue="test123queue"/>
-            <!--<rabbit:binding queue="test-queue-2"></rabbit:binding>-->
+            <rabbit:binding queue="test-queue-1"/>
         </rabbit:bindings>
     </rabbit:fanout-exchange> 
 
     <!-- 启动两个队列对应的监听(消费者) -->
     <bean id="fanoutListener" class="org.hong.rabbitmq.consumer.fanout.FanoutConsumerListener"></bean>
-    <!--<bean id="fanoutListener2" class="org.hong.rabbitmq.consumer.fanout.FanoutConsumerListener2"></bean>-->
 
     <rabbit:listener-container connection-factory="connectionFactory" concurrency="8">
-        <rabbit:listener queues="test123queue" ref="fanoutListener" method="onMessage"/>
-        <!--<rabbit:listener queues="test-queue-2" ref="fanoutListener2" method="onMessage"/>-->
+        <rabbit:listener queues="test-queue-1" ref="fanoutListener" method="onMessage"/>
     </rabbit:listener-container>
 
 </beans>  
